@@ -29,31 +29,13 @@ add_subdirectory("./core")
 add_subdirectory("./scene")
 add_subdirectory("./servers")
 
-set( Srcs	
-			GraphicModel.cpp
-			GridSelection.cpp
-			Job/Job.cpp
-			Job/JobSubmitDialog.cpp
-			Job/JobThread.cpp
-			Job/JobWorker.cpp
-			main.cpp 
-			MainWindow.cpp
-			MsgWindow.cpp			
-			ParamDialog.cpp 
-			Processing.cpp
-			QVTKResWidget/QVTKResWidget.cpp
-			QVTKResWidget/ResWidgetWorker.cpp
-			sortdialog.cpp 
-			SimpleView.cpp 
-			Tetrahedron.cpp)
-
+set( Srcs	test.cpp)
 		
 
-add_executable(${NAME} MACOSX_BUNDLE
+add_executable(${NAME} 
 ${Srcs} 
 ${Hdrs} 
-
 )
 	
 set (EXTRA_LIBS opengl32 glu32 gdi32)
-target_link_libraries (${NAME} ${EXTRA_LIBS} )
+#target_link_libraries (${NAME} ${EXTRA_LIBS} )
