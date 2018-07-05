@@ -30,12 +30,12 @@
 
 #include "mesh_instance.h"
 
-#include "collision_shape.h"
+//#include "collision_shape.h"
 #include "core_string_names.h"
-#include "physics_body.h"
+//#include "physics_body.h"
 #include "scene/resources/material.h"
 #include "scene/scene_string_names.h"
-#include "skeleton.h"
+//#include "skeleton.h"
 bool MeshInstance::_set(const StringName &p_name, const Variant &p_value) {
 
 	//this is not _too_ bad performance wise, really. it only arrives here if the property was not set anywhere else.
@@ -144,27 +144,8 @@ Ref<Mesh> MeshInstance::get_mesh() const {
 	return mesh;
 }
 
-void MeshInstance::_resolve_skeleton_path() {
 
-	if (skeleton_path.is_empty())
-		return;
 
-	Skeleton *skeleton = Object::cast_to<Skeleton>(get_node(skeleton_path));
-	if (skeleton)
-		VisualServer::get_singleton()->instance_attach_skeleton(get_instance(), skeleton->get_skeleton());
-}
-
-void MeshInstance::set_skeleton_path(const NodePath &p_skeleton) {
-
-	skeleton_path = p_skeleton;
-	if (!is_inside_tree())
-		return;
-	_resolve_skeleton_path();
-}
-
-NodePath MeshInstance::get_skeleton_path() {
-	return skeleton_path;
-}
 
 AABB MeshInstance::get_aabb() const {
 
@@ -185,65 +166,6 @@ PoolVector<Face3> MeshInstance::get_faces(uint32_t p_usage_flags) const {
 	return mesh->get_faces();
 }
 
-Node *MeshInstance::create_trimesh_collision_node() {
-
-	if (mesh.is_null())
-		return NULL;
-
-	Ref<Shape> shape = mesh->create_trimesh_shape();
-	if (shape.is_null())
-		return NULL;
-
-	StaticBody *static_body = memnew(StaticBody);
-	CollisionShape *cshape = memnew(CollisionShape);
-	cshape->set_shape(shape);
-	static_body->add_child(cshape);
-	return static_body;
-}
-
-void MeshInstance::create_trimesh_collision() {
-
-	StaticBody *static_body = Object::cast_to<StaticBody>(create_trimesh_collision_node());
-	ERR_FAIL_COND(!static_body);
-	static_body->set_name(String(get_name()) + "_col");
-
-	add_child(static_body);
-	if (get_owner()) {
-		CollisionShape *cshape = Object::cast_to<CollisionShape>(static_body->get_child(0));
-		static_body->set_owner(get_owner());
-		cshape->set_owner(get_owner());
-	}
-}
-
-Node *MeshInstance::create_convex_collision_node() {
-
-	if (mesh.is_null())
-		return NULL;
-
-	Ref<Shape> shape = mesh->create_convex_shape();
-	if (shape.is_null())
-		return NULL;
-
-	StaticBody *static_body = memnew(StaticBody);
-	CollisionShape *cshape = memnew(CollisionShape);
-	cshape->set_shape(shape);
-	static_body->add_child(cshape);
-	return static_body;
-}
-
-void MeshInstance::create_convex_collision() {
-
-	StaticBody *static_body = Object::cast_to<StaticBody>(create_convex_collision_node());
-	ERR_FAIL_COND(!static_body);
-	static_body->set_name(String(get_name()) + "_col");
-
-	add_child(static_body);
-	if (get_owner()) {
-		CollisionShape *cshape = Object::cast_to<CollisionShape>(static_body->get_child(0));
-		static_body->set_owner(get_owner());
-		cshape->set_owner(get_owner());
-	}
-}
 
 void MeshInstance::_notification(int p_what) {
 
@@ -355,8 +277,6 @@ void MeshInstance::_bind_methods() {
 
 	ClassDB::bind_method(D_METHOD("set_mesh", "mesh"), &MeshInstance::set_mesh);
 	ClassDB::bind_method(D_METHOD("get_mesh"), &MeshInstance::get_mesh);
-	ClassDB::bind_method(D_METHOD("set_skeleton_path", "skeleton_path"), &MeshInstance::set_skeleton_path);
-	ClassDB::bind_method(D_METHOD("get_skeleton_path"), &MeshInstance::get_skeleton_path);
 
 	ClassDB::bind_method(D_METHOD("set_surface_material", "surface", "material"), &MeshInstance::set_surface_material);
 	ClassDB::bind_method(D_METHOD("get_surface_material", "surface"), &MeshInstance::get_surface_material);

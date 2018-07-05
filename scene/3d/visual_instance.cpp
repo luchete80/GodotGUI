@@ -32,7 +32,7 @@
 
 #include "scene/scene_string_names.h"
 #include "servers/visual_server.h"
-#include "skeleton.h"
+//#include "skeleton.h"
 
 AABB VisualInstance::get_transformed_aabb() const {
 
@@ -73,7 +73,7 @@ void VisualInstance::_notification(int p_what) {
 		case NOTIFICATION_EXIT_WORLD: {
 
 			VisualServer::get_singleton()->instance_set_scenario(instance, RID());
-			VisualServer::get_singleton()->instance_attach_skeleton(instance, RID());
+			//VisualServer::get_singleton()->instance_attach_skeleton(instance, RID());
 			//VS::get_singleton()->instance_geometry_set_baked_light_sampler(instance, RID() );
 
 		} break;

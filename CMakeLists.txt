@@ -21,6 +21,7 @@ find_package(OpenGL)
 
 include_directories(.)
 include_directories("${PROJECT_SOURCE_DIR}")
+include_directories("${PROJECT_SOURCE_DIR}/core")
 include_directories("${PROJECT_SOURCE_DIR}/editor")
 include_directories("${PROJECT_SOURCE_DIR}/scene")
 include_directories("${PROJECT_SOURCE_DIR}/servers")

@@ -34,7 +34,7 @@
 #include "scene/3d/spatial.h"
 #include "scene/3d/spatial_velocity_tracker.h"
 #include "scene/main/viewport.h"
-#include "scene/resources/environment.h"
+//#include "scene/resources/environment.h" //LUCIANO
 /**
 	@author Juan Linietsky <reduzio@gmail.com>
 */

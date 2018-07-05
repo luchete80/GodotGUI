@@ -32,8 +32,8 @@
 
 #include "engine.h"
 #include "scene/3d/camera.h"
-#include "scene/3d/physics_body.h"
-#include "scene/animation/animation_player.h"
+//#include "scene/3d/physics_body.h"
+//#include "scene/animation/animation_player.h"
 #include "scene/scene_string_names.h"
 
 void VisibilityNotifier::_enter_camera(Camera *p_camera) {
@@ -150,23 +150,23 @@ void VisibilityEnabler::_find_nodes(Node *p_node) {
 	bool add = false;
 	Variant meta;
 
-	if (enabler[ENABLER_FREEZE_BODIES]) {
+	// if (enabler[ENABLER_FREEZE_BODIES]) {
 
-		RigidBody *rb = Object::cast_to<RigidBody>(p_node);
-		if (rb && ((rb->get_mode() == RigidBody::MODE_CHARACTER || (rb->get_mode() == RigidBody::MODE_RIGID && !rb->is_able_to_sleep())))) {
+		// RigidBody *rb = Object::cast_to<RigidBody>(p_node);
+		// if (rb && ((rb->get_mode() == RigidBody::MODE_CHARACTER || (rb->get_mode() == RigidBody::MODE_RIGID && !rb->is_able_to_sleep())))) {
 
-			add = true;
-			meta = rb->get_mode();
-		}
-	}
+			// add = true;
+			// meta = rb->get_mode();
+		// }
+	// }
 
-	if (enabler[ENABLER_PAUSE_ANIMATIONS]) {
+	// if (enabler[ENABLER_PAUSE_ANIMATIONS]) {
 
-		AnimationPlayer *ap = Object::cast_to<AnimationPlayer>(p_node);
-		if (ap) {
-			add = true;
-		}
-	}
+		// AnimationPlayer *ap = Object::cast_to<AnimationPlayer>(p_node);
+		// if (ap) {
+			// add = true;
+		// }
+	// }
 
 	if (add) {
 
@@ -219,21 +219,21 @@ void VisibilityEnabler::_change_node_state(Node *p_node, bool p_enabled) {
 
 	ERR_FAIL_COND(!nodes.has(p_node));
 
-	{
-		RigidBody *rb = Object::cast_to<RigidBody>(p_node);
-		if (rb)
+	// {
+		// RigidBody *rb = Object::cast_to<RigidBody>(p_node);
+		// if (rb)
 
-			rb->set_sleeping(!p_enabled);
-	}
+			// rb->set_sleeping(!p_enabled);
+	// }
 
-	{
-		AnimationPlayer *ap = Object::cast_to<AnimationPlayer>(p_node);
+	// {
+		// AnimationPlayer *ap = Object::cast_to<AnimationPlayer>(p_node);
 
-		if (ap) {
+		// if (ap) {
 
-			ap->set_active(p_enabled);
-		}
-	}
+			// ap->set_active(p_enabled);
+		// }
+	// }
 }
 
 void VisibilityEnabler::_node_removed(Node *p_node) {
